@@ -18,6 +18,12 @@ def preprocess_car_evaluation(
 
     df = pd.read_csv(input_path)
 
+    if target_column not in df.columns:
+        raise ValueError(
+            f"Target column '{target_column}' not found. "
+            f"Available columns: {list(df.columns)}"
+        )
+
     X = df.drop(columns=[target_column])
     y = df[target_column]
 
