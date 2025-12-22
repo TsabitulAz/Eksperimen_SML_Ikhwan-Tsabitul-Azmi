@@ -1,0 +1,41 @@
+name: Dataset Preprocessing Pipeline
+
+on:
+  push:
+    paths:
+      - "dataset_raw/**"
+      - "Preprocessing/**"
+  workflow_dispatch:
+
+jobs:
+  preprocessing:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.13.5
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13.5"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pandas scikit-learn joblib
+
+      - name: Run preprocessing pipeline
+        run: |
+          python Preprocessing/automate_Ikhwan-Tsabitul-Azmi.py \
+            --input_path dataset_raw/car_evaluation.csv \
+            --output_dir Preprocessing/dataset_preprocessing \
+            --target_column class
+
+      - name: Commit processed dataset
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+          git add Preprocessing/dataset_preprocessing
+          git commit -m "Auto-update preprocessed dataset" || echo "No changes to commit"
+          git push
