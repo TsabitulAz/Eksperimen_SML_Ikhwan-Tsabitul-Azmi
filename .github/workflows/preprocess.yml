@@ -32,10 +32,8 @@ jobs:
             --output_dir Preprocessing/dataset_preprocessing \
             --target_column class
 
-      - name: Commit processed dataset
-        run: |
-          git config --global user.name "github-actions"
-          git config --global user.email "github-actions@github.com"
-          git add Preprocessing/dataset_preprocessing
-          git commit -m "Auto-update preprocessed dataset" || echo "No changes to commit"
-          git push
+      - name: Upload preprocessed dataset as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: car-evaluation-preprocessed
+          path: Preprocessing/dataset_preprocessing
