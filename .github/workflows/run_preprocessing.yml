@@ -5,6 +5,7 @@ on:
     paths:
       - "dataset_raw/**"
       - "Preprocessing/**"
+  workflow_dispatch:
 
 jobs:
   preprocessing:
