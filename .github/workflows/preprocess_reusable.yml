@@ -38,7 +38,7 @@ jobs:
 
       - name: Run preprocessing
         run: |
-          python Preprocessing/automate_preprocessing.py \
+          python Preprocessing/automate_Ikhwan-Tsabitul-Azmi.py \
             --input_path "${{ inputs.input_path }}" \
             --output_dir "${{ inputs.output_dir }}" \
             --target_column "${{ inputs.target_column }}"
